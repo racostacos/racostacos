@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wood Calculators</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input, button, select {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #resultFirewood, #resultPlank, #resultHouse {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .calculator {
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Wood Calculators</h1>
+
+    <!-- Firewood Calculator -->
+    <div class="calculator">
+        <h2>Firewood Calculator</h2>
+        <p>1 wood makes 2 firewood.</p>
+        <label for="firewoodAmount">Enter the amount of firewood you need:</label><br>
+        <input type="number" id="firewoodAmount" placeholder="Enter firewood amount"><br>
+        <button onclick="calculateFirewood()">Calculate Firewood</button>
+        <div id="resultFirewood"></div>
+    </div>
+
+    <!-- Plank Calculator -->
+    <div class="calculator">
+        <h2>Plank Calculator</h2>
+        <p>1 wood makes 2 planks.</p>
+        <label for="woodAmount">Enter the amount of wood you have:</label><br>
+        <input type="number" id="woodAmount" placeholder="Enter wood amount"><br>
+        <button onclick="calculatePlank()">Calculate Planks</button>
+        <div id="resultPlank"></div>
+    </div>
+
+    <!-- Small Simple House Calculator -->
+    <div class="calculator">
+        <h2>Small Simple House Calculator</h2>
+        <p>Select the foundation type:</p>
+        <select id="foundationType">
+            <option value="stone">Stone Foundation</option>
+            <option value="wood">Wood Foundation</option>
+        </select><br>
+        <button onclick="calculateHouseMaterials()">Calculate Materials</button>
+        <div id="resultHouse"></div>
+    </div>
+
+    <script>
+        // Firewood Calculator Function
+        function calculateFirewood() {
+            const firewoodAmount = document.getElementById('firewoodAmount').value;
+            if (!firewoodAmount || firewoodAmount <= 0) {
+                document.getElementById('resultFirewood').innerText = "Please enter a valid number greater than 0.";
+                return;
+            }
+            const woodRequired = firewoodAmount / 2;
+            document.getElementById('resultFirewood').innerText = 
+                `To make ${firewoodAmount} firewood, you need ${woodRequired} wood.`;
+        }
+
+        // Plank Calculator Function
+        function calculatePlank() {
+            const woodAmount = document.getElementById('woodAmount').value;
+            if (!woodAmount || woodAmount <= 0) {
+                document.getElementById('resultPlank').innerText = "Please enter a valid number greater than 0.";
+                return;
+            }
+            const planksProduced = woodAmount * 2;
+            document.getElementById('resultPlank').innerText = 
+                `With ${woodAmount} wood, you can make ${planksProduced} planks.`;
+        }
+
+        // Small Simple House Calculator Function
+        function calculateHouseMaterials() {
+            const foundationType = document.getElementById('foundationType').value;
+            let materials = {};
+
+            if (foundationType === "stone") {
+                materials = {
+                    logs: 25,
+                    sticks: 66,
+                    straw: 32,
+                    stones: 10
+                };
+            } else if (foundationType === "wood") {
+                materials = {
+                    logs: 33,
+                    sticks: 66,
+                    straw: 32,
+                    stones: 0
+                };
+            }
+
+            const resultText = `
+                For a small simple house with a ${foundationType} foundation, you need:
+                <ul>
+                    <li>${materials.logs} logs</li>
+                    <li>${materials.sticks} sticks</li>
+                    <li>${materials.straw} straw</li>
+                    ${materials.stones > 0 ? `<li>${materials.stones} stones</li>` : ""}
+                </ul>
+            `;
+            document.getElementById('resultHouse').innerHTML = resultText;
+        }
+    </script>
+</body>
+</html>
